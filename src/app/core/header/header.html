@@ -1,0 +1,68 @@
+<div class="navbar bg-base-100 shadow-sm">
+  <div class="navbar-start md:hidden">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h7"
+          />
+        </svg>
+      </div>
+      <ul
+        tabindex="-1"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+      >
+        @if (!auth.user) {
+          <li routerLink="/login"><a>Login</a></li>
+          <li><a routerLink="/sign-up">Sign Up</a></li>
+        }
+
+        <li routerLink="/messages"><a>Messages</a></li>
+        <li><a>Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="navbar-center md:navbar-start">
+    <a routerLink="/" class="text-2xl">Sarhne</a>
+  </div>
+  <div class="navbar-end">
+    <ul tabindex="-1" class="menu menu-horizontal bg-base-100 hidden md:flex">
+      @if (!auth.user) {
+        <li routerLink="/login"><a>Login</a></li>
+        <li><a routerLink="/sign-up">Sign Up</a></li>
+      }
+      <li><a>Profile</a></li>
+      <li><a>Contact Us</a></li>
+    </ul>
+    <div *auth class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          />
+        </div>
+      </div>
+      <ul
+        tabindex="-1"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+      >
+        <li>
+          <a routerLink="/profile"> Profile </a>
+        </li>
+        <li routerLink="/messages"><a>My Messages</a></li>
+        <li><a>Settings</a></li>
+        <li (click)="logout()"><a>Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

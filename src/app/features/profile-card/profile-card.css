@@ -1,0 +1,4 @@
+@reference "#styles";
+:host {
+  @apply card bg-base-100 border-base-300 px-5 shadow;
+}

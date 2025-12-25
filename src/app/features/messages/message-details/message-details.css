@@ -1,0 +1,5 @@
+@reference "#styles";
+
+:host {
+  @apply flex flex-row items-start justify-center gap-3;
+}

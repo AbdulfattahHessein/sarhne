@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+@plugin 'daisyui' {
+  themes:
+    corporate --default,
+    dark --prefersdark,
+    halloween,
+    night,
+    nord;
+  logs: false;
+}
+
+body {
+  @apply bg-base-200/30 min-h-screen;
+}
