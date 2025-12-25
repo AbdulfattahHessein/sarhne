@@ -8,7 +8,7 @@ export const authGuard: (...roles: Role[]) => CanActivateFn = (roles) => {
     const auth = inject(AuthService);
     const router = inject(Router);
 
-    if (!auth.user) {
+    if (!auth.isLoggedIn()) {
       router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
       return false;
     }
@@ -25,7 +25,7 @@ export const notAuthGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  if (auth.isLoggedIn) {
+  if (auth.isLoggedIn()) {
     router.navigate(['/']);
 
     return false;

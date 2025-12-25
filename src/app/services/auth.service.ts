@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, switchMap, tap } from 'rxjs';
 import { Role } from '../models/role';
 import { envService } from './env.service';
@@ -18,15 +18,11 @@ export class AuthService {
   private http = inject(HttpClient);
   private env = inject(envService);
 
-  private _user: User | null = null;
+  private _user = signal<User | null>(null);
 
-  get user() {
-    return this._user;
-  }
+  user = this._user.asReadonly();
 
-  get isLoggedIn() {
-    return !!this._user;
-  }
+  isLoggedIn = computed(() => !!this.user());
 
   login(user: { email: string; password: string }): Observable<any> {
     return this.http
@@ -41,7 +37,7 @@ export class AuthService {
   logout() {
     return this.http.post(this.env.env.apiUrl + '/auth/logout', {}).pipe(
       tap(() => {
-        this._user = null;
+        this._user.set(null);
       }),
     );
   }
@@ -49,10 +45,10 @@ export class AuthService {
   loadUserInfo() {
     return this.http
       .get<{ data: User } | null>(this.env.env.apiUrl + '/auth/user-info')
-      .pipe(tap((res) => (this._user = res ? res.data : null)));
+      .pipe(tap((res) => this._user.set(res ? res.data : null)));
   }
 
   hasRoles(...roles: Role[] | string[]) {
-    return this._user?.roles.some((role) => roles.includes(role));
+    return this._user()?.roles.some((role) => roles.includes(role));
   }
 }

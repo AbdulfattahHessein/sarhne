@@ -1,7 +1,7 @@
 <div class="navbar bg-base-100 shadow-sm">
   <div class="navbar-start md:hidden">
     <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+      <div tabindex="0" role="button" class="btn btn-circle btn-ghost">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
@@ -19,9 +19,9 @@
       </div>
       <ul
         tabindex="-1"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+        class="dropdown-content menu z-1 mt-3 w-52 menu-sm rounded-box bg-base-100 p-2 shadow"
       >
-        @if (!auth.user) {
+        @if (!auth.isLoggedIn()) {
           <li routerLink="/login"><a>Login</a></li>
           <li><a routerLink="/sign-up">Sign Up</a></li>
         }
@@ -35,16 +35,16 @@
     <a routerLink="/" class="text-2xl">Sarhne</a>
   </div>
   <div class="navbar-end">
-    <ul tabindex="-1" class="menu menu-horizontal bg-base-100 hidden md:flex">
-      @if (!auth.user) {
+    <ul tabindex="-1" class="menu menu-horizontal hidden bg-base-100 md:flex">
+      @if (!auth.isLoggedIn()) {
         <li routerLink="/login"><a>Login</a></li>
         <li><a routerLink="/sign-up">Sign Up</a></li>
       }
-      <li><a>Profile</a></li>
+      <li *auth><a>Profile</a></li>
       <li><a>Contact Us</a></li>
     </ul>
     <div *auth class="dropdown dropdown-end">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+      <div tabindex="0" role="button" class="btn avatar btn-circle btn-ghost">
         <div class="w-10 rounded-full">
           <img
             alt="Tailwind CSS Navbar component"
@@ -54,7 +54,7 @@
       </div>
       <ul
         tabindex="-1"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+        class="dropdown-content menu z-1 mt-3 w-52 menu-sm rounded-box bg-base-100 p-2 shadow"
       >
         <li>
           <a routerLink="/profile"> Profile </a>

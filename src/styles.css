@@ -12,5 +12,5 @@
 }
 
 body {
-  @apply bg-base-200/30 min-h-screen;
+  @apply min-h-screen bg-base-200/30;
 }

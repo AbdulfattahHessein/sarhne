@@ -1,5 +1,6 @@
 import {
   Directive,
+  effect,
   inject,
   Input,
   OnChanges,
@@ -18,6 +19,12 @@ export class AuthDirective implements OnInit, OnChanges {
   private viewContainerRef = inject(ViewContainerRef);
   private authService = inject(AuthService);
 
+  constructor() {
+    effect(() => {
+      this.updateView();
+    });
+  }
+
   @Input('auth') roles?: Role | Role[] | string | string[];
 
   ngOnInit(): void {
@@ -31,7 +38,7 @@ export class AuthDirective implements OnInit, OnChanges {
   private updateView(): void {
     this.viewContainerRef.clear();
 
-    if (!this.authService.isLoggedIn) {
+    if (!this.authService.isLoggedIn()) {
       return;
     }
 

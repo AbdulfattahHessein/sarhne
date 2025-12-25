@@ -21,7 +21,8 @@
     ],
     "plugins": [
       "prettier-plugin-tailwindcss"
-    ]
+    ],
+    "tailwindStylesheet": "./src/styles.css"
   },
   "private": true,
   "packageManager": "npm@11.4.2",

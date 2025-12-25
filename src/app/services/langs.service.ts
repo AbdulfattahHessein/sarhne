@@ -57,7 +57,7 @@ export class LangsService {
       concatMap((langs) => {
         this._langs = langs;
         return this.setupLangs();
-      })
+      }),
     );
   }
 
