@@ -1,5 +1,5 @@
 @reference "#styles";
 
 :host {
-  @apply block;
+  @apply block min-h-screen;
 }

@@ -1,33 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { concatMap } from 'rxjs';
-
-export interface Langs {
-  default: string;
-  fallback: string;
-  supported: Supported[];
-  localeStorageKey: string;
-}
-
-export interface Supported {
-  code: string;
-  name: string;
-  flag: string;
-}
+import { AppSettingsService } from './appsettings.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LangsService {
-  _langs!: Langs;
+  appSettings = inject(AppSettingsService);
 
   get langs() {
-    return this._langs;
+    return this.appSettings.env.i18n;
   }
 
   get langsCodes() {
-    return this.langs.supported.map((lang) => lang.code);
+    return this.langs.languages.map((lang) => lang.code);
   }
 
   private _currentLanguage = '';
@@ -41,7 +28,7 @@ export class LangsService {
   }
 
   get storedLang() {
-    return localStorage.getItem(this._langs.localeStorageKey);
+    return localStorage.getItem(this.langs.localeStorageKey);
   }
 
   get browserLang() {
@@ -51,15 +38,6 @@ export class LangsService {
   private translate = inject(TranslateService);
 
   http = inject(HttpClient);
-
-  loadLangs() {
-    return this.http.get<Langs>('configs/langs.json').pipe(
-      concatMap((langs) => {
-        this._langs = langs;
-        return this.setupLangs();
-      }),
-    );
-  }
 
   setupLangs() {
     this.translate.addLangs(this.langsCodes);
@@ -79,6 +57,6 @@ export class LangsService {
 
   switchLanguage(): void {
     this.translate.use(this._currentLanguage);
-    localStorage.setItem(this._langs.localeStorageKey, this._currentLanguage);
+    localStorage.setItem(this.langs.localeStorageKey, this._currentLanguage);
   }
 }

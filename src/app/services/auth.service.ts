@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, switchMap, tap } from 'rxjs';
+import { ApiResponse } from '../models/api-response';
 import { Role } from '../models/role';
-import { envService } from './env.service';
+import { AppSettingsService } from './appsettings.service';
 
 export interface User {
   id: string;
   email: string;
   isEmailConfirmed: boolean;
   roles: Role[];
+  name: string;
 }
 
 @Injectable({
@@ -16,7 +18,8 @@ export interface User {
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private env = inject(envService);
+
+  private appSettings = inject(AppSettingsService);
 
   private _user = signal<User | null>(null);
 
@@ -26,16 +29,16 @@ export class AuthService {
 
   login(user: { email: string; password: string }): Observable<any> {
     return this.http
-      .post(this.env.env.apiUrl + '/auth/login', user)
+      .post(this.appSettings.env.apiUrl + '/auth/login', user)
       .pipe(switchMap(() => this.loadUserInfo()));
   }
 
   register(user: { email: string; password: string }) {
-    return this.http.post(this.env.env.apiUrl + '/auth/register', user);
+    return this.http.post(this.appSettings.env.apiUrl + '/auth/register', user);
   }
 
   logout() {
-    return this.http.post(this.env.env.apiUrl + '/auth/logout', {}).pipe(
+    return this.http.post(this.appSettings.env.apiUrl + '/auth/logout', {}).pipe(
       tap(() => {
         this._user.set(null);
       }),
@@ -44,11 +47,11 @@ export class AuthService {
 
   loadUserInfo() {
     return this.http
-      .get<{ data: User } | null>(this.env.env.apiUrl + '/auth/user-info')
-      .pipe(tap((res) => this._user.set(res ? res.data : null)));
+      .get<ApiResponse<User>>(this.appSettings.env.apiUrl + '/auth/user-info')
+      .pipe(tap((res) => this._user.set(res.data)));
   }
 
   hasRoles(...roles: Role[] | string[]) {
-    return this._user()?.roles.some((role) => roles.includes(role));
+    return this._user()?.roles.some((role) => roles.includes(role)) ?? false;
   }
 }

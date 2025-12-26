@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -6,4 +7,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrl: './profile.css',
   encapsulation: ViewEncapsulation.Emulated,
 })
-export class Profile {}
+export class Profile {
+  auth = inject(AuthService);
+}

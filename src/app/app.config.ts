@@ -1,3 +1,4 @@
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   ApplicationConfig,
   inject,
@@ -5,16 +6,13 @@ import {
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { concatMap, forkJoin } from 'rxjs';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
+import { AppSettingsService } from './services/appsettings.service';
 import { AuthService } from './services/auth.service';
-import { envService } from './services/env.service';
-import { GlobalConfigService } from './services/global-config.service';
 import { LangsService } from './services/langs.service';
 
 export const appConfig: ApplicationConfig = {
@@ -33,16 +31,13 @@ export const appConfig: ApplicationConfig = {
 };
 
 function initializeApp() {
-  const configService = inject(envService);
-
   const langService = inject(LangsService);
 
-  const global = inject(GlobalConfigService);
+  const appSettings = inject(AppSettingsService);
 
   const auth = inject(AuthService);
 
-  return global
-    .loadGlobalConfig()
-    .pipe(concatMap(() => forkJoin([configService.loadEnv(), langService.loadLangs()])))
-    .pipe(concatMap(() => auth.loadUserInfo()));
+  return appSettings
+    .loadAppSettings()
+    .pipe(concatMap(() => forkJoin([langService.setupLangs(), auth.loadUserInfo()])));
 }

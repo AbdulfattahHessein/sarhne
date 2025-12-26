@@ -40,14 +40,14 @@
         <li routerLink="/login"><a>Login</a></li>
         <li><a routerLink="/sign-up">Sign Up</a></li>
       }
-      <li *auth><a>Profile</a></li>
+      <li *auth routerLink="/profile"><a>Profile</a></li>
       <li><a>Contact Us</a></li>
     </ul>
     <div *auth class="dropdown dropdown-end">
       <div tabindex="0" role="button" class="btn avatar btn-circle btn-ghost">
         <div class="w-10 rounded-full">
           <img
-            alt="Tailwind CSS Navbar component"
+            alt="profile image"
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
           />
         </div>
@@ -59,7 +59,7 @@
         <li>
           <a routerLink="/profile"> Profile </a>
         </li>
-        <li routerLink="/messages"><a>My Messages</a></li>
+        <li routerLink="/messages"><a>Messages</a></li>
         <li><a>Settings</a></li>
         <li (click)="logout()"><a>Logout</a></li>
       </ul>
