@@ -11,6 +11,7 @@ export interface User {
   isEmailConfirmed: boolean;
   roles: Role[];
   name: string;
+  profileSlug: string;
 }
 
 @Injectable({
@@ -34,7 +35,9 @@ export class AuthService {
   }
 
   register(user: { email: string; password: string }) {
-    return this.http.post(this.appSettings.env.apiUrl + '/auth/register', user);
+    return this.http
+      .post(this.appSettings.env.apiUrl + '/auth/register', user)
+      .pipe(switchMap(() => this.sendEmailConfirmationLink(user.email)));
   }
 
   logout() {
@@ -48,10 +51,32 @@ export class AuthService {
   loadUserInfo() {
     return this.http
       .get<ApiResponse<User>>(this.appSettings.env.apiUrl + '/auth/user-info')
-      .pipe(tap((res) => this._user.set(res.data)));
+      .pipe(tap((res) => this._user.set(res?.data)));
   }
 
   hasRoles(...roles: Role[] | string[]) {
     return this._user()?.roles.some((role) => roles.includes(role)) ?? false;
+  }
+
+  sendEmailConfirmationLink(email: string) {
+    return this.http.post(this.appSettings.env.apiUrl + '/auth/email-verification', { email });
+  }
+
+  confirmEmail(email: string, token: string) {
+    return this.http.get(this.appSettings.env.apiUrl + '/auth/email-verification', {
+      params: { email, token },
+    });
+  }
+
+  sendPasswordResetLink(email: string) {
+    return this.http.post(this.appSettings.env.apiUrl + '/auth/forget-password', { email });
+  }
+
+  resetPassword(email: string, token: string, password: string) {
+    return this.http.post(this.appSettings.env.apiUrl + '/auth/reset-password', {
+      token,
+      password,
+      email,
+    });
   }
 }

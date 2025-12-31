@@ -5,7 +5,7 @@ import {
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withRouterConfig } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { concatMap, forkJoin } from 'rxjs';
@@ -18,7 +18,13 @@ import { LangsService } from './services/langs.service';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withRouterConfig({
+        paramsInheritanceStrategy: 'always',
+      }),
+    ),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: './i18n/',

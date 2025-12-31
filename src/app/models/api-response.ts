@@ -1,9 +1,9 @@
-export interface ApiResponse<T> {
-  data: T | null;
+export interface ApiResponse<T = null> {
+  data: T;
   isSuccess: boolean;
   message: string;
-  errors?: { [key: string]: string[] };
-  paginator?: Paginator;
+  errors: { [key: string]: string[] };
+  paginator: Paginator;
 }
 
 export interface Paginator {

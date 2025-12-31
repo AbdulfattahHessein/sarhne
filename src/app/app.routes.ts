@@ -1,15 +1,17 @@
 import { Routes } from '@angular/router';
+import { ProfileSettings } from './components/profile-settings/profile-settings';
 import { Messages } from './features/messages/messages';
 import { Profile } from './features/profile/profile';
 import { authGuard, notAuthGuard } from './guards/auth.guard';
 import { Login } from './login/login';
 import { Role } from './models/role';
+import { accountResolver, getMyAccountResolver } from './resolvers/account.resolver';
 import { SignUp } from './sign-up/sign-up';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'profile',
+    redirectTo: 'messages',
     pathMatch: 'full',
   },
   {
@@ -31,9 +33,25 @@ export const routes: Routes = [
     canActivate: [authGuard(Role.User)],
   },
   {
-    path: 'profile',
-    title: 'Profile',
+    path: 'u/:slug',
     component: Profile,
-    canActivate: [authGuard(Role.User)],
+    resolve: {
+      account: accountResolver,
+    },
+  },
+
+  {
+    path: 'settings',
+    resolve: {
+      account: getMyAccountResolver,
+    },
+    children: [
+      {
+        path: '',
+        component: ProfileSettings,
+        title: 'Settings',
+        canActivate: [authGuard(Role.User)],
+      },
+    ],
   },
 ];

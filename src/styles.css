@@ -7,10 +7,7 @@
     dark --prefersdark,
     halloween,
     night,
-    nord;
+    nord,
+    light;
   logs: false;
-}
-
-body {
-  @apply min-h-screen bg-base-200/30;
 }

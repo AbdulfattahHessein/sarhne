@@ -9,7 +9,7 @@
           src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
         />
       </div>
-      <h1 class="text-xl font-semibold">{{ auth.user()?.name }}</h1>
+      <h1 class="text-xl font-semibold">{{ account().name }}</h1>
       <div class="flex w-full justify-between">
         <div class="text-center">
           <p>Follows</p>
@@ -25,19 +25,28 @@
         </div>
       </div>
     </div>
-    <form class="flex w-full flex-col gap-2">
+    <form (submit)="onSubmit($event)" class="flex w-full flex-col gap-2">
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Write message to abdulfattah</legend>
-        <textarea class="textarea h-24 w-full" placeholder="Your message"></textarea>
+        <textarea
+          class="textarea h-24 w-full"
+          [field]="form.content"
+          placeholder="Your message"
+        ></textarea>
       </fieldset>
       <div class="flex justify-between">
-        <label class="label">
-          <span class="font-semibold">Public</span>
-          <input type="checkbox" name="" id="" class="toggle toggle-primary toggle-sm" />
+        <label class="label" for="sendAnonymously">
+          <span class="font-semibold">Send Anonymously</span>
+          <input
+            type="checkbox"
+            id="sendAnonymously"
+            [field]="form.sendAnonymously"
+            class="toggle toggle-primary toggle-sm"
+          />
         </label>
         <p>0/100</p>
       </div>
-      <label for="image" class="btn btn-secondary">
+      <label [hidden]="!account().settings.allowImages" for="image" class="btn btn-secondary">
         <svg class="w-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -64,7 +73,7 @@
         Add Image
       </label>
       <input id="image" name="image" type="file" class="hidden" />
-      <button class="btn btn-primary">
+      <button type="submit" class="btn btn-primary">
         <svg
           class="w-8 fill-white"
           viewBox="0 0 24 24"

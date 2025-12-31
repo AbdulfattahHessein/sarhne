@@ -41,6 +41,10 @@ export class AppSettingsService {
     return this._environmentType === EnvironmentTypes.DEV;
   }
 
+  get apiUrl() {
+    return this.env.apiUrl;
+  }
+
   http = inject(HttpClient);
 
   private GetEnvPath() {

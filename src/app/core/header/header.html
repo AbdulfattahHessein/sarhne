@@ -26,7 +26,11 @@
           <li><a routerLink="/sign-up">Sign Up</a></li>
         }
 
-        <li routerLink="/messages"><a>Messages</a></li>
+        @if (auth.isLoggedIn()) {
+          <li routerLink="/messages"><a>Messages</a></li>
+          <li><a routerLink="/settings">Settings</a></li>
+        }
+
         <li><a>Contact Us</a></li>
       </ul>
     </div>
@@ -40,7 +44,12 @@
         <li routerLink="/login"><a>Login</a></li>
         <li><a routerLink="/sign-up">Sign Up</a></li>
       }
-      <li *auth routerLink="/profile"><a>Profile</a></li>
+      @if (auth.isLoggedIn()) {
+        <li routerLink="/profile"><a>Profile</a></li>
+        <li routerLink="/messages"><a>Messages</a></li>
+        <li><a routerLink="/settings">Settings</a></li>
+      }
+
       <li><a>Contact Us</a></li>
     </ul>
     <div *auth class="dropdown dropdown-end">
@@ -60,8 +69,8 @@
           <a routerLink="/profile"> Profile </a>
         </li>
         <li routerLink="/messages"><a>Messages</a></li>
-        <li><a>Settings</a></li>
-        <li (click)="logout()"><a>Logout</a></li>
+        <li><a routerLink="/settings">Settings</a></li>
+        <li class="font-semibold text-error" (click)="logout()"><a>Logout</a></li>
       </ul>
     </div>
   </div>

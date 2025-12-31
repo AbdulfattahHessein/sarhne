@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { Field } from '@angular/forms/signals';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { createLoginForm } from './login-form';
+import { createLoginForm } from './login.form';
 
 @Component({
   selector: 'app-login',
-  imports: [Field],
+  imports: [Field, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

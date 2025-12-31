@@ -1,5 +1,5 @@
 @reference "#styles";
 
 :host {
-  @apply block min-h-screen;
+  @apply flex h-screen flex-col overflow-hidden;
 }

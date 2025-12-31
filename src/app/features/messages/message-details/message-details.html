@@ -9,13 +9,14 @@
     class="absolute left-0 z-20 size-4 -translate-x-[6px] -translate-y-[0.6px] rotate-45 rounded-b-sm bg-base-200"
   ></div>
   <div class="flex items-center justify-between">
-    <p>Anonymous</p>
-    <div>
+    <p>{{ message().senderName }} : {{ message().date | date: 'short' }}</p>
+    <div (click)="toggleFav()">
       <svg
         fill="none"
         viewBox="-6 -1.9 22.80 22.80"
         xmlns="http://www.w3.org/2000/svg"
-        class="cf-icon-svg size-10 fill-yellow-300 stroke-base-200"
+        class="cf-icon-svg size-10 cursor-pointer fill-white stroke-base-200"
+        [class.fill-yellow-300]="message().isFav"
       >
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -28,11 +29,11 @@
     </div>
   </div>
   <div class="pb-2">
-    انت طه حسين عميد الادب العربي 🙂 🙂 الكلام ع بكره كلمة السر السهره صباحى وانا كل يوم صاحي 😎
+    {{ message().content }}
   </div>
   <div class="flex items-center justify-between">
     <div class="space-x-2">
-      <button class="btn btn-sm btn-error">Delete</button>
+      <button (click)="deleteMessage()" class="btn btn-sm btn-error">Delete</button>
       <button class="btn btn-sm btn-primary">Show</button>
     </div>
     <div>

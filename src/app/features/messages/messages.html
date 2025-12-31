@@ -5,18 +5,46 @@
     <app-profile-card />
     <div class="card w-full flex-2 gap-4 border-base-300 bg-base-100 p-3 shadow lg:col-span-2">
       <div class="join w-full *:flex-1">
-        <button class="btn btn-active join-item btn-secondary">Incoming</button>
-        <button class="btn join-item btn-secondary">Favorites</button>
-        <button class="btn join-item btn-secondary">Sent</button>
+        <button
+          (click)="getMessages('Received')"
+          class="btn join-item btn-secondary"
+          [class.btn-active]="selectedMessageType === 'Received'"
+        >
+          Incoming
+        </button>
+        <button
+          (click)="getMessages('fav')"
+          class="btn join-item btn-secondary"
+          [class.btn-active]="selectedMessageType === 'fav'"
+        >
+          Favorites
+        </button>
+        <button
+          (click)="getMessages('Sent')"
+          class="btn join-item btn-secondary"
+          [class.btn-active]="selectedMessageType === 'Sent'"
+        >
+          Sent
+        </button>
       </div>
-      <div class="flex flex-row items-center justify-between">
-        <div class="font-semibold">Messages: 6</div>
-        <button class="btn">Options</button>
-      </div>
+      @if (messages$ | async; as messages) {
+        <div class="flex flex-row items-center justify-between">
+          <div class="font-semibold">Messages: {{ messages.paginator.totalCount }}</div>
+          <button class="btn">Options</button>
+        </div>
 
-      <div class="divider -my-3"></div>
-      <app-message-details class="w-full" />
-      <app-message-details />
+        <div class="divider -my-3"></div>
+
+        @if (messages.data.length > 0) {
+          @for (message of messages.data; track message.id) {
+            <app-message-details (deleted)="getMessages(selectedMessageType)" [message]="message" />
+          }
+        } @else {
+          <div class="flex h-20 flex-col justify-center text-center text-xl">
+            <p>No messages</p>
+          </div>
+        }
+      }
     </div>
   </div>
 </div>

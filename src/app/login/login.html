@@ -1,5 +1,5 @@
 <form
-  class="card mt-10 w-full max-w-sm gap-4 border border-base-200 bg-base-100 p-8 shadow-2xl md:max-w-md lg:max-w-lg"
+  class="card w-full max-w-sm gap-4 border border-base-200 bg-base-100 p-8 shadow-2xl md:max-w-md lg:max-w-lg"
   (submit)="onSubmit($event)"
 >
   <h1 class="mb-4 text-3xl font-semibold">Login</h1>
@@ -42,10 +42,14 @@
   <div class="form-control">
     <button type="submit" class="btn w-full btn-primary">Login</button>
   </div>
+  <p class="text-sm text-gray-600">
+    Don't have an account?
+    <a routerLink="/sign-up" class="link">Sign up</a>
+  </p>
   <div class="divider">Or continue with</div>
   <div class="flex justify-between gap-5">
     <!-- Google -->
-    <button type="button" class="btn flex-1 border-[#e5e5e5] bg-white text-black btn-primary">
+    <button type="button" class="btn flex-1 border-base-300 bg-white text-black">
       <svg
         aria-label="Google logo"
         width="24"
