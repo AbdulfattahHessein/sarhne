@@ -35,7 +35,7 @@
         ></textarea>
       </fieldset>
       <div class="flex justify-between">
-        <label class="label" for="sendAnonymously">
+        <label class="label" for="sendAnonymously" [hidden]="!account().settings.allowAnonymous">
           <span class="font-semibold">Send Anonymously</span>
           <input
             type="checkbox"
@@ -73,7 +73,7 @@
         Add Image
       </label>
       <input id="image" name="image" type="file" class="hidden" />
-      <button type="submit" class="btn btn-primary">
+      <button [disabled]="!account().settings.allowMessages" type="submit" class="btn btn-primary">
         <svg
           class="w-8 fill-white"
           viewBox="0 0 24 24"

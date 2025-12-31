@@ -35,4 +35,12 @@ export class UserSettingsService {
   changeProfileSlug(request: { profileSlug: string }) {
     return this.http.patch<ApiResponse>(`${this.apiUrl}/user/settings/profile-slug`, request);
   }
+
+  changePrivacy(request: {
+    allowMessages: boolean;
+    allowImages: boolean;
+    allowAnonymous: boolean;
+  }) {
+    return this.http.patch<ApiResponse>(`${this.apiUrl}/user/settings/privacy`, request);
+  }
 }

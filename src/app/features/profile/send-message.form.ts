@@ -1,5 +1,4 @@
-import { signal } from '@angular/core';
-import { form } from '@angular/forms/signals';
+import { signalForm } from '../../helpers/signal-form';
 
 export type SendMessageRequest = {
   content: string;
@@ -7,12 +6,10 @@ export type SendMessageRequest = {
   sendAnonymously: boolean;
 };
 
-const formModel = signal<SendMessageRequest>({
-  content: '',
-  receiverId: '',
-  sendAnonymously: false,
-});
-
 export function createSendMessageForm() {
-  return form(formModel);
+  return signalForm<SendMessageRequest>({
+    content: '',
+    receiverId: '',
+    sendAnonymously: false,
+  });
 }

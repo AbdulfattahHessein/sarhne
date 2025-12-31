@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-profile-card',
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './profile-card.html',
   styleUrl: './profile-card.css',
 })
-export class ProfileCard {}
+export class ProfileCard {
+  origin = location.origin;
+  auth = inject(AuthService);
+}

@@ -5,8 +5,8 @@
       src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
     />
   </div>
-  <h1 class="text-2xl font-semibold">Abdulfattah Hessein</h1>
-  <p>https://abdulfattahhessein.sarhne.com</p>
+  <h1 class="text-center text-2xl font-semibold">{{ auth.user()?.name }}</h1>
+  <p>{{ `${origin}/u/${auth.user()?.profileSlug}` }}</p>
   <small class="text-gray-600">Share the link and start receiving messages and feedback.</small>
   <button class="btn w-full btn-primary">Send and receive messages</button>
 </div>
